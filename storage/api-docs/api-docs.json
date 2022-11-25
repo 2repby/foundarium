@@ -1,0 +1,262 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Foundarium test task",
+        "contact": {
+            "email": "2repby@gmail.com"
+        },
+        "version": "0.1"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000/api/",
+            "description": "Локальный сервер для разработки"
+        }
+    ],
+    "paths": {
+        "/car": {
+            "get": {
+                "tags": [
+                    "car"
+                ],
+                "summary": "Display all cars.",
+                "description": "Получение всех автомобилей",
+                "operationId": "getcars",
+                "responses": {
+                    "200": {
+                        "description": "Display a listing of cars."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "car"
+                ],
+                "summary": "Create Car",
+                "description": "Добавление автомобиля",
+                "operationId": "createcar",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "402": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/car/{id}": {
+            "get": {
+                "tags": [
+                    "car"
+                ],
+                "summary": "Display car.",
+                "description": "Получение автомобиля",
+                "operationId": "getcar",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "car id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Display a car."
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "car"
+                ],
+                "summary": "Update car.",
+                "description": "Обновление автомобиля",
+                "operationId": "updatecar",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "car id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "user_id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "402": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "car"
+                ],
+                "summary": "Delete car.",
+                "description": "Удаление автомобиля",
+                "operationId": "deletecar",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "car id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Delete car."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/car/{id}/user": {
+            "get": {
+                "tags": [
+                    "car"
+                ],
+                "summary": "Get user by car.",
+                "description": "Получение пользователя по автомобилю",
+                "operationId": "getuserbycar",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "car id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Display user by car."
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Login with email and password",
+                "description": "User Login",
+                "operationId": "login",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "bearerAuth",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
